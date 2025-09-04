@@ -9,9 +9,13 @@ const port = 4000;
 
 
 app.use(cors());
+
+
 app.get("/", (req, res) => {
-    res.send("Hello from tRPC server!");
+    res.send("Hello from tRPC server !!");
 });
+
+
 app.use(
     "/trpc",
     trpcExpress.createExpressMiddleware({
