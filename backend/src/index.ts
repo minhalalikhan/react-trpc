@@ -1,6 +1,8 @@
 import express from "express";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import {applyWSSHandler} from "@trpc/server/adapters/ws";
 import { appRouter } from "./trpc";
+import ws from "ws";
 
 import cors from "cors";
 
@@ -24,6 +26,13 @@ app.use(
     })
 );
 
-app.listen(port, () => {
+const server=app.listen(port, () => {
     console.log(`🚀 Server is running at http://localhost:${port}`);
 });
+
+applyWSSHandler({
+    wss:new ws.Server({server,path:"/trpc"}),
+    router:appRouter,
+    createContext:()=>({}),
+});
+

@@ -4,6 +4,7 @@ import "./App.css";
 
 function App() {
   const [count, setCount] = useState({ a: "", b: "", result: 0 });
+  const [time, setTime] = useState("");
 
   const [error, setError] = useState<string | null>(null);
 
@@ -11,7 +12,19 @@ function App() {
     email: "minhalalikhan@gmail.com",
   });
 
-  const dummy = trpc.hello.useQuery({ boi: "minhal" });
+
+  trpc.clock.useSubscription(
+    { interval: 1000 },
+    {
+      onData(data) {
+        setTime(data);
+      },
+      onError(err) {
+        console.error(err);
+      },
+    }
+  );
+  // const dummy = trpc.hello.useQuery({ boi: "minhal" });
 
   const Addfunc = trpc.add.useMutation({
     onSuccess: (data) => {
@@ -35,6 +48,10 @@ function App() {
   return (
     <div className="container">
       <div className="">React TRPC Client App</div>
+
+      <div>
+        <p>Server Time: {time}</p>
+      </div>
 
       {/*  function */}
 

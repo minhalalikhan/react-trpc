@@ -11,9 +11,9 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <trpc.Provider client={trpcClient()} queryClient={queryClient}>
-      {/* <QueryClientProvider client={queryClient}> */}
+      <QueryClientProvider client={queryClient}>
       <App />
-      {/* </QueryClientProvider> */}
+      </QueryClientProvider>
     </trpc.Provider>
   </StrictMode>
 );
